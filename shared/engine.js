@@ -36,7 +36,7 @@ var Engine = function() {
 
 		start: function(d, p) {
 			interval = window.setInterval(update, d);
-			tileMap = new TileMap(16, 16);
+			tileMap = new TileMap(20, 20);
 			var self = this;
 			window.setTimeout(function() {
 				if (currentRenderer != "undefined") {

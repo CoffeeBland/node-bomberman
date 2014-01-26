@@ -45,7 +45,7 @@ var Game = function() {
 	return {
 		start: function(d, p){
 			if (!currentRenderer)
-				currentRenderer = new Renderer(640, 480, 0xff8800);
+				currentRenderer = new Renderer(480, 480, 0xff8800);
 			if (!currentEngine)
 				currentEngine = new Engine();
 
