@@ -6,11 +6,11 @@ module.exports = (function() {
   function boot() {
     // Sockets.io boot
     io.sockets.on('connection', function (socket) {
-      setUpListeners();
+      setUpListeners(socket);
     });
   }
 
-  function setUpListeners() {
+  function setUpListeners(socket) {
     socket.on('my other event', function (data) {
       console.log(data);
     });
