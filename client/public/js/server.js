@@ -42,6 +42,7 @@ var Server = function(serverName){
     // Start game rendering
     socket.removeAllListeners('startingGame');
     socket.on('startingGame', function(data){
+      STEPS.goTo(5);
       var game = new Game();
       game.start(
         1000 / 60,
