@@ -5,8 +5,8 @@ var Engine = function() {
 		var d = t - time;
 		time = t;
 
-		for(var actor in actors) {
-			actor.update(d);
+		for(var i = 0; i < actors.length; i++) {
+			actors[i].update(d);
 		}
 	};
 
@@ -21,19 +21,37 @@ var Engine = function() {
 		getActors: function() {
 			return actors;
 		},
+		getPlayerCharacters: function() {
+			return playerCharacters;
+		},
+		addPlayer: function(name, uid) {
+			var c = new Character(0, 0);
+			if (currentRenderer != "undefined") {
+				c.setSpriteSheet(characterTexture, characterColorTexture, 3, 4, 8);
+			}
+			this.getActors().push(c);
+			playerCharacters[uid] = c;
+			return c;
+		},
 
 		start: function(d, p) {
 			interval = window.setInterval(update, d);
+			for (var i = 0; i < p.length; i++) {
+				this.addPlayer(p[i].name, p[i].id);
+			}
 		},
 		stop: function() {
-			if (interval)
+			if (interval) {
 				window.clearInterval(interval);
+				if (getTileMap().isRendering())
+					getTileMap().disposeRender();
+			}
 		},
 
 		playerCharacter: function(uid) {
-			return players[uid];
+			return playerCharacters[uid];
 		}
 	};
 };
 
-var currentEngine = new Engine(640, 480, 0xff8800);
+var currentEngine = new Engine();

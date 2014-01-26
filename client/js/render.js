@@ -44,4 +44,4 @@ var Renderer = function(w, h, c) {
 	};
 }
 
-var currentRenderer = new Renderer();
+var currentRenderer = new Renderer(640, 480, 0xff8800);

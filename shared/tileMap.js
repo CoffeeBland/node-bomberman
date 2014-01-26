@@ -21,6 +21,7 @@ var TileMap = function(w, h) {
 		tileSize, 
 		tileSize
 	);
+	var isRendering = false;
 
 	this.generateMap = function() {
 		return new TileMap(24, 24);
@@ -62,7 +63,7 @@ var TileMap = function(w, h) {
 			return dist;
 		},
 
-		prepareTexture: function() {
+		startRender: function() {
 			backContainer = new PIXI.DisplayObjectContainer();
 
 			// Construct tilemap
@@ -83,9 +84,11 @@ var TileMap = function(w, h) {
 			backsprite = new PIXI.Sprite(backTexture);
 
 			currentRenderer.addSprite(this.getBacksprite());
+			isRendering = true;
 		},
 		disposeRender: function() {
-
+			currentRenderer.removeSprite(this.getBacksprite());
+			isRendering = false;
 		},
 		changeTile: function(x, y, id) {
 			var os = this.getBackContainer().getChildAt(y + x * h);

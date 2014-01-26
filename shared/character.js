@@ -1,6 +1,7 @@
 var Character = function(x, y) {
 	var x, y, speed = 0.5;
-	var sx, sy, sw, sh, spriteSheet, a, tmpA;
+	var sx, sy, sw, sh;
+	var spriteSheet, colorSpriteSheet, a, tmpA;
 
 	return {
 		getX: function() {
@@ -30,35 +31,41 @@ var Character = function(x, y) {
 
 		setSourceX: function(sourceX) {
 			sx = sourceX;
-			tmp = sx * sw
-			while (tmp > spriteSheet.width)
-				tmp -= spriteSheet.width;
-			spriteSheet.anchor.x = tmp / spriteSheet.width
+			while (sx > sw)
+				sx -= sw;
+		  spriteSheet.anchor.x = (sx * sw) / spriteSheet.width;
+		  colorSpriteSheet.anchor.x = (sx * sw) / spriteSheet.width;
 		},
 		getSourceX: function(sourceX) {
 			return sx;
 		},
 		setSourceY: function(sourceY) {
 			sy = sourceY;
-			tmp = sy * sh
-			while (tmp > spriteSheet.height)
-				tmp -= spriteSheet.height;
-			spriteSheet.anchor.y = tmp / spriteSheet.height
+			while (sy > sh)
+				sy -= sh;
+			spriteSheet.anchor.y = (sy * sh) / spriteSheet.height;
+			colorSpriteSheet.anchor.y = (sy * sh) / spriteSheet.height;
 		},
 
-		setSpriteSheet: function(texture, w, h, anim) {
-			console.log(texture);
-			spriteSheet = new PIXI.Sprite(texture);
-			console.log(texture);
+		setSpriteSheet: function(texture, colorTexture, w, h, anim) {
+		  frame = new PIXI.Rectangle(0, 0, texture.width / w, texture.height / h);
+			spriteSheet = new PIXI.Sprite(new PIXI.Texture(texture, frame));
+			colorSpriteSheet = new PIXI.Sprite(new PIXI.Texture(colorTexture, frame));
 			sx = 0;
 			sy = 0;
 			sw = w;
 			sh = h;
 			a = anim;
+			tmpA = anim;
 			currentRenderer.addSprite(spriteSheet);
+			currentRenderer.addSprite(colorSpriteSheet);
 		},
 		die: function() {
+				if (!spriteSheet)
+					return;
+
 				currentRenderer.removeSprite(spriteSheet);
+				currentRenderer.removeSprite(colorSpriteSheet);
 		},
 		update: function(d) {
 			if (!spriteSheet)
