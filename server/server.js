@@ -1,4 +1,4 @@
-CLIENT_SERVER_PORT = process.argv[2] || 8080;
+CLIENT_SERVER_PORT = process.env.PORT || 8080;
 SOCKET_SERVER_PORT = 1337;
 var express = require('express')
   , app = express()
