@@ -133,7 +133,8 @@ var Server = function(serverName){
     setUsername: setUsername,
     sendChat: sendChat,
     quitRoom: quitRoom,
-    startGame: startGame
+    startGame: startGame,
+    serverName: serverName
   };
 }
 

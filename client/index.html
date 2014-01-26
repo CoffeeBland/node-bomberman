@@ -1,27 +1,20 @@
 <html>
   <head>
     <title>NodePixiSocket Bomberman</title>
+    <link rel="stylesheet" type="text/css" href="/style/style.css">
   </head>
   <body>
-    <link rel="stylesheet" type="text/css" href="/style/style.css">
-
-    <!-- Networking with server -->
-    <script src="http://localhost:8081/socket.io/socket.io.js"></script>
-    <!-- Libs -->
-    <script src="/js/pixi.dev.js"></script>
-    <script src="/js/jquery.min.js"></script>
-
     <div id="container">
       <h1>NodePixiSocket Bomberman</h1>
 
       <div id="pregame">
         <div id="step1">
           <h4>Connect to a server</h4>
-          <input type="text" name="server-addresss" id="server-addresss" placeholder="Server address" />
+          <input type="text" name="server-addresss" id="server-addresss" placeholder="Server address" value="<%= host %>" />
           <a href="javascript:void(0);" id="set-server">Connect to server</a>
 
           <div style="text-align:center;">
-            <a href="javascript:void(0);" class="dev-set-server" data-url="http://localhost:8081">http://localhost:8081</a><br/>
+            <a href="javascript:void(0);" class="dev-set-server" data-url="http://localhost:1337">http://localhost:1337</a><br/>
             <a href="javascript:void(0);" class="dev-set-server" data-url="http://bomber.kiasaki.com:443">http://bomber.kiasaki.com:443</a>
           </div>
 
@@ -61,6 +54,11 @@
     </div>
 
     <div id="connection-status" class="hidden fontized stylized"></div>
+
+    <!-- Libs -->
+    <script src="/js/lib/socket.io.js"></script>
+    <script src="/js/lib/pixi.dev.js"></script>
+    <script src="/js/lib/jquery.min.js"></script>
 
     <!-- Engine -->
     <script src="/character.js"></script>

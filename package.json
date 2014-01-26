@@ -13,6 +13,7 @@
     "dependencies": {
         "express": "*",
         "socket.io": "*",
-        "ejs": "*"
+        "hogan.js": "*",
+        "consolidate": "*"
     }
 }
