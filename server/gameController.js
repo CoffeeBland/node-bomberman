@@ -1,6 +1,6 @@
 var io = require('socket.io').listen(8081);
 
-module.exports = function() {
+module.exports = (function() {
   var rooms = [];
 
   function boot() {
@@ -23,4 +23,4 @@ module.exports = function() {
   return {
     boot: boot
   };
-}
+})();
