@@ -1,4 +1,5 @@
 var GameRepository = require('./repositories/gameRepository')
+  , PlayerRepository = require('./repositories/playerRepository')
   , Game = require('./models/game')
   , Player = require('./models/player');
 

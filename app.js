@@ -12,4 +12,4 @@ require('./client/client')(app, SERVER_PORT);
 require('./server/server')(server, SERVER_PORT);
 
 // Now we are configured let's start listening
-server.listen(CLIENT_SERVER_PORT);
+server.listen(SERVER_PORT);

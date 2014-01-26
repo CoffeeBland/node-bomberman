@@ -1,4 +1,5 @@
 var engines = require('consolidate')
+  , express = require('express');
 
 module.exports = function(app, port) {
 
