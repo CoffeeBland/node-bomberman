@@ -35,7 +35,7 @@ var Game = function() {
 	};
 
 	// Canvas
-	var canvas = document.getElementById('game');
+	var canvas = document.getElementById('game-canvas');
 	var ctx = canvas.getContext("2d");
 
 	// Game objects

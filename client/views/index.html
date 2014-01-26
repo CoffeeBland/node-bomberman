@@ -6,6 +6,23 @@
   <body>
     <div id="container">
       <h1>NodePixiSocket Bomberman</h1>
+      <div id="pregame">
+        <div>
+          <h4>Server address</h4>
+          <input type="text" name="server-addresss" id="server-addresss" placeholder="Server address" value="{{host}}" />
+        </div>
+        <br />
+        <div>
+          <h4>User name</h4>
+          <input type="text" class="stylized fontized" name="username" id="username" />
+          <a href="javascript:void(0);" id="set-server">Connect to server</a>
+        </div>
+        <div id="room-select">
+
+        </div>
+      </div>
+      <div id="game">
+      </div>
 
       <div id="pregame">
         <div id="step1">
@@ -60,16 +77,11 @@
     <script src="/js/lib/pixi.dev.js"></script>
     <script src="/js/lib/jquery.min.js"></script>
 
-    <!-- Engine -->
-    <script src="/character.js"></script>
-    <script src="/tileMap.js"></script>
-    <script src="/engine.js"></script>
-
-    <!-- Game (render & client-specific) -->
-    <script src="/js/spritesheet.js"></script>
-    <script src="/js/camera.js"></script>
+    <!-- Game -->
+    <script src="/js/fileManager.js"></script>
+    <script src="/js/spriteSheet.js"></script>
+    <script src="/js/tileMap.js"></script>
     <script src="/js/game.js"></script>
-    <script src="/js/render.js"></script>
 
     <!-- GUI / Pregame -->
     <script src="/js/server.js"></script>
