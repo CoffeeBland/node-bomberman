@@ -1,5 +1,6 @@
-var ChatManager = function(rid) {
+var ChatManager = function(rid, room) {
   var roomId = rid;
+  var roomObject = room;
 
   $('#chat-messages').empty();
   $('#chat-toolbar textarea').val('');
@@ -16,7 +17,9 @@ var ChatManager = function(rid) {
   function updateUsersInRoom(data) {
     $('#room-users').empty();
     for (var i = data.length - 1; i >= 0; i--) {
-      $('#room-users').append('<div class="stylized stylized-light boxed fontized">' + data[i].name + '</div>');
+      $('#room-users').append('<div class="stylized stylized-light boxed fontized">' + data[i].name +
+        (data[i].owner ? ' (owner)' : '') +
+        '</div>');
     };
   }
 
@@ -39,6 +42,12 @@ var ChatManager = function(rid) {
   });
 
   return {
+    getRoomObject: function() {
+      return roomObject;
+    },
+    getRoomID: function() {
+      return roomId;
+    },
     append: appendNewMessage,
     sendMessage: sendMessage,
     updateUsersInRoom: updateUsersInRoom

@@ -21,7 +21,7 @@ module.exports = (function() {
 
   function findById(items, id) {
     for (var i = items.length - 1; i >= 0; i--) {
-      if (items[i].getID() == id) {
+      if (items[i] && items[i].getID() == id) {
         return items[i];
       }
     };
@@ -37,12 +37,14 @@ module.exports = (function() {
   }
 
   function setUpListeners(user, socket) {
+    var roomId = null;
 
     //  Needs
     //    data.name - New room name
     //    data.uid - User id creating room
     socket.on('createRoom', function (data) {
       var room = new Room(data.name);
+      roomId = room.getID();
       room.addUser(findById(users, data.uid));
       room.setOwner(data.uid);
       rooms.push(room);
@@ -57,8 +59,18 @@ module.exports = (function() {
       var user = findById(users, data.uid);
       var room = findById(rooms, data.rid);
       room.addUser(user);
+      roomId = room.getID();
       socket.emit('joinedRoom', room.toJson());
       console.log('User "' + user.getName() + '" joined room: ' + room.getName() + ' (' + room.getID() + ')');
+    });
+
+    //  Needs
+    //    data.uid
+    //    data.rid
+    socket.on('quitRoom', function (data) {
+      var room = findById(rooms, roomId);
+      if (room)
+        room.removePlayer(user.getID());
     });
 
     //  Needs nothing
@@ -82,6 +94,13 @@ module.exports = (function() {
         room.sendChat(data);
       else
         console.log('WARN: Could not find room ' + data.rid);
+    });
+
+    socket.on('startGame', function(data){
+      var room = findById(rooms, data.rid);
+      if (room.getOwnerID() == user.getID()) {
+        room.startGame();
+      }
     });
 
     // Disconnect

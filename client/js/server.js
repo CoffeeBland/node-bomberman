@@ -39,6 +39,15 @@ var Server = function(serverName){
       if (CHAT)
         CHAT.updateUsersInRoom(data);
     });
+    // Start game rendering
+    socket.removeAllListeners('startingGame');
+    socket.on('startingGame', function(data){
+      var game = new Game();
+      game.start(
+        1000 / 60,
+        data
+      );
+    });
 
     socket.removeAllListeners('disconnect');
     socket.on('disconnect', function(){
@@ -95,6 +104,16 @@ var Server = function(serverName){
     socket.emit('sendChat', data);
   }
 
+  function quitRoom() {
+    socket.emit('quitRoom', {});
+  }
+
+  function startGame(rid) {
+    socket.emit('startGame', {
+      rid: rid
+    });
+  }
+
   return {
     getUserID: function() {
       return currentUserID;
@@ -112,7 +131,9 @@ var Server = function(serverName){
     addNewRoom: addNewRoom,
     joinRoom: joinRoom,
     setUsername: setUsername,
-    sendChat: sendChat
+    sendChat: sendChat,
+    quitRoom: quitRoom,
+    startGame: startGame
   };
 }
 
