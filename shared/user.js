@@ -1,11 +1,37 @@
+var UUID = require('./uuid');
+
 var User = function() {
-	var id, x, y;
+  var id, name, x, y, socket;
 
-	function do() {
+  var id = UUID();
 
-	}
+  function doStuff() {
 
-	return {
-		
-	};
+  }
+
+  return {
+    getSocket: function () {
+      return socket;
+    },
+    setSocket: function (newSocket) {
+      socket = newSocket;
+    },
+    getID: function() {
+      return id;
+    },
+    setID: function(newID) {
+      id = newID;
+    },
+    getName: function() {
+      return name;
+    },
+    setName: function(newName) {
+      name = newName;
+    }
+  };
 };
+
+// Obscure node stuff goes here
+if (module) {
+  module.exports = User;
+}
