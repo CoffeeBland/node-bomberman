@@ -6,7 +6,7 @@
 var Renderer = function(w, h, c) {
 	var stage = new PIXI.Stage(c);
 	var renderer = PIXI.autoDetectRenderer(w, h);
-	document.body.appendChild(renderer.view);
+	document.getElementById('game').appendChild(renderer.view);
 
 	var abortRender = false;
 	var render = function() {
