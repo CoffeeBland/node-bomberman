@@ -1,6 +1,6 @@
 var Engine = function() {
 	var interval;
-	var udpate = function() {
+	var update = function() {
 
 	};
 
