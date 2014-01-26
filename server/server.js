@@ -20,10 +20,7 @@ app.configure(function(){
 
 // Routes
 app.get('/', function(req, res){
-  var host = req.headers.host.replace(CLIENT_SERVER_PORT, SOCKET_SERVER_PORT);
-  if (host.indexOf(':') == -1)
-    host += ':' + SOCKET_SERVER_PORT;
-  res.render("index.html", {host: 'http://' + host, port: CLIENT_SERVER_PORT});
+  res.render("index.html", {host: 'http://' + req.headers.host, port: CLIENT_SERVER_PORT});
 });
 
 server.listen(CLIENT_SERVER_PORT);
