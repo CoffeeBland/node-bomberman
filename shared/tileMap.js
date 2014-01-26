@@ -9,7 +9,9 @@ var TileMap = function(w, h) {
 	for (var i = 0; i < w; i++) {
 		tiles[i] = new Array(h);
 		for (var n = 0; n < h; n++) {
-			tiles[i][n] = Math.floor(Math.random() * 3);
+			tiles[i][n] = i != 0 ? Math.floor(Math.random() * 3) : 2;
+			if (Math.random() < 0.50)
+				tiles[i][n] = 2;
 		}
 	}
 
@@ -33,38 +35,26 @@ var TileMap = function(w, h) {
 		},
 
 		longestDistanceForX: function(x, y, distance) {
-			return Math.max(Math.min(distance, ((w - 1) * tileSize - x)), -x);
+			distance = Math.max(Math.min(distance, ((w - characterSize) * tileSize - x)), -x);
 
-			var min = Math.max(Math.min(0, distance), -x);
-			var max = Math.max(distance, 0);
-			var dist = 0;
-			for (var ix = Math.floor((x + min) / tileSize); ix <= Math.ceil((x + max) / tileSize) && ix < w; ix++) {
-				var isClear = true;
-				for (var iy = Math.floor(y / tileSize); iy <= Math.ceil(y / tileSize) && iy < h; iy++)
-					isClear = this.getTiles()[ix][iy] == 2 && isClear;
-				if (isClear)
-					dist = ix;
-				else
-					return dist;
-			}
-			return dist;
+			tx = (x + distance) / tileSize;
+			ty = y / tileSize;
+			for (var ix = Math.floor(tx); ix < Math.ceil(tx + characterSize); ix++)
+				for (var iy = Math.floor(ty); iy < Math.ceil(ty + characterSize); iy++)
+					if (this.getTiles()[ix][iy] != 2)
+						return 0;
+			return distance;
 		},
 		longestDistanceForY: function(x, y, distance) {
-			return Math.max(Math.min(distance, ((h - 1) * tileSize - y)), -y);
+			distance = Math.max(Math.min(distance, ((h - characterSize) * tileSize - y)), -y);
 
-			var min = Math.max(Math.min(0, distance), -y);
-			var max = Math.max(distance, 0);
-			var dist = 0;
-			for (var iy = Math.floor((y + min) / tileSize); iy <= Math.ceil((y + max) / tileSize) && iy < h; iy++) {
-				var isClear = true;
-				for (var ix = Math.floor(x / tileSize); ix <= Math.ceil(x / tileSize) && ix < w; ix++)
-					isClear = this.getTiles()[ix][iy] == 2 && isClear;
-				if (isClear)
-					dist = iy;
-				else
-					return dist;
-			}
-			return dist;
+			tx = x / tileSize;
+			ty = (y + distance) / tileSize;
+			for (var ix = Math.floor(tx); ix < Math.ceil(tx + characterSize); ix++)
+				for (var iy = Math.floor(ty); iy < Math.ceil(ty + characterSize); iy++)
+					if (this.getTiles()[ix][iy] != 2)
+						return 0;
+			return distance;
 		},
 
 		startRender: function() {

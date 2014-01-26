@@ -15,7 +15,7 @@ var loadCharacterSpriteSheets = function() {
 		}
 	}
 }
-
+var characterSize = 0.6;
 var Character = function(x, y) {
 	var x, y, speed = 2;
 	var sx, sy, sw, sh;
@@ -114,10 +114,10 @@ var Character = function(x, y) {
 				tmpA += a;
 				this.setSourceX(this.getSourceX() + 1);
 			}
-			sprite.position.x = x;
-			sprite.position.y = y - 16;
-			colorSprite.position.x = x;
-			colorSprite.position.y = y - 16;
+			sprite.position.x = x - 4;
+			sprite.position.y = y - 18;
+			colorSprite.position.x = x - 4;
+			colorSprite.position.y = y - 18;
 		}
 	};
 };
