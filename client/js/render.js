@@ -5,7 +5,7 @@ var stage = new PIXI.Stage(0x66FF99);
 var renderer = PIXI.autoDetectRenderer(480, 320);
 
 // add the renderer view element to the DOM
-document.body.appendChild(renderer.view);
+document.getElementById('game').appendChild(renderer.view);
 
 
 // create a texture from an image path
@@ -28,6 +28,6 @@ function animate() {
   requestAnimFrame(animate);
         lapoule.rotation += 0.1;
 
-  // render the stage   
+  // render the stage
   renderer.render(stage);
 }
