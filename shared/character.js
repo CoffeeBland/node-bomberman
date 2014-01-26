@@ -17,7 +17,7 @@ var loadCharacterSpriteSheets = function() {
 }
 
 var Character = function(x, y) {
-	var x, y, speed = 0.5;
+	var x, y, speed = 2;
 	var sx, sy, sw, sh;
 	var sprite, colorSprite, a, tmpA;
 
@@ -49,10 +49,27 @@ var Character = function(x, y) {
 
 		setSourceX: function(sourceX) {
 			sx = sourceX;
-			while (sx >= sw)
-				sx -= sw;
-		  sprite.setTexture(characterTextureSheetFrames[sx][sy]);
-		  colorSprite.setTexture(characterColorTextureSheetFrames[sx][sy]);
+			//while (sx >= sw)
+			//	sx -= sw;
+			while (sx > sw)
+				sx -= sw + 1;
+			var tx;
+			switch (sx) {
+				case 0:
+					tx = 0;
+					break;
+				case 1:
+					tx = 1;
+					break;
+				case 2:
+					tx = 0;
+					break;
+				case 3:
+					tx = 2;
+					break;
+			}
+		  sprite.setTexture(characterTextureSheetFrames[tx][sy]);
+			colorSprite.setTexture(characterColorTextureSheetFrames[tx][sy]);
 		},
 		getSourceX: function(sourceX) {
 			return sx;
@@ -79,6 +96,7 @@ var Character = function(x, y) {
 			tmpA = anim;
 			currentRenderer.addSprite(sprite);
 			currentRenderer.addSprite(colorSprite);
+			colorSprite.tint = 0x00FF00;
 		},
 		die: function() {
 				if (!sprite)
@@ -97,7 +115,9 @@ var Character = function(x, y) {
 				this.setSourceX(this.getSourceX() + 1);
 			}
 			sprite.position.x = x;
-			colorSprite.position.y = y;
+			sprite.position.y = y - 16;
+			colorSprite.position.x = x;
+			colorSprite.position.y = y - 16;
 		}
 	};
 };

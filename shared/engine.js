@@ -36,9 +36,16 @@ var Engine = function() {
 
 		start: function(d, p) {
 			interval = window.setInterval(update, d);
-			for (var i = 0; i < p.length; i++) {
-				this.addPlayer(p[i].name, p[i].id);
-			}
+			tileMap = new TileMap(16, 16);
+			var self = this;
+			window.setTimeout(function() {
+				if (currentRenderer != "undefined") {
+					tileMap.startRender();
+				}
+				for (var i = 0; i < p.length; i++) {
+					self.addPlayer(p[i].name, p[i].id);
+				}
+			}, 0);
 		},
 		stop: function() {
 			if (interval) {

@@ -9,7 +9,7 @@ var TileMap = function(w, h) {
 	for (var i = 0; i < w; i++) {
 		tiles[i] = new Array(h);
 		for (var n = 0; n < h; n++) {
-			tiles[i][n] = 0;
+			tiles[i][n] = 2;
 		}
 	}
 
@@ -33,13 +33,15 @@ var TileMap = function(w, h) {
 		},
 
 		longestDistanceForX: function(x, y, distance) {
-			var min = Math.min(0, distance);
+			return Math.max(Math.min(distance, ((w - 1) * tileSize - x)), -x);
+
+			var min = Math.max(Math.min(0, distance), -x);
 			var max = Math.max(distance, 0);
 			var dist = 0;
-			for (var ix = Math.floor(x + min / tileSize); ix < Math.ceil(x+ max / tileSize); ix++) {
+			for (var ix = Math.floor((x + min) / tileSize); ix <= Math.ceil((x + max) / tileSize) && ix < w; ix++) {
 				var isClear = true;
-				for (var iy = Math.floor(y / tileSize); iy < Math.ceil(y / tileSize); iy++)
-					isClear = getTiles()[ix][iy] == 2 && isClear;
+				for (var iy = Math.floor(y / tileSize); iy <= Math.ceil(y / tileSize) && iy < h; iy++)
+					isClear = this.getTiles()[ix][iy] == 2 && isClear;
 				if (isClear)
 					dist = ix;
 				else
@@ -48,13 +50,15 @@ var TileMap = function(w, h) {
 			return dist;
 		},
 		longestDistanceForY: function(x, y, distance) {
-			var min = Math.min(0, distance);
+			return Math.max(Math.min(distance, ((h - 1) * tileSize - y)), -y);
+
+			var min = Math.max(Math.min(0, distance), -y);
 			var max = Math.max(distance, 0);
 			var dist = 0;
-			for (var iy = Math.floor(y + min / tileSize); iy < Math.ceil(y + max / tileSize); ix++) {
+			for (var iy = Math.floor((y + min) / tileSize); iy <= Math.ceil((y + max) / tileSize) && iy < h; iy++) {
 				var isClear = true;
-				for (var ix = Math.floor(x / tileSize); ix < Math.ceil(x / tileSize); iy++)
-					isClear = getTiles()[ix][iy] == 2 && isClear;
+				for (var ix = Math.floor(x / tileSize); ix <= Math.ceil(x / tileSize) && ix < w; ix++)
+					isClear = this.getTiles()[ix][iy] == 2 && isClear;
 				if (isClear)
 					dist = iy;
 				else
@@ -115,6 +119,9 @@ var TileMap = function(w, h) {
 		},
 		getSpritesheet: function() {
 			return spritesheet;
+		},
+		isRendering: function() {
+			return isRendering;
 		}
 	};
 };
