@@ -85,8 +85,8 @@ var TileMap = function(w, h) {
 			currentRenderer.addSprite(this.getBacksprite());
 		},
 		disposeRender: function() {
-			
-		}
+
+		},
 		changeTile: function(x, y, id) {
 			var os = this.getBackContainer().getChildAt(y + x * h);
 			var ns = new PIXI.Sprite(this.getSpritesheet()[id]);
