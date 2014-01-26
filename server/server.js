@@ -17,7 +17,10 @@ app.configure(function(){
 
 // Routes
 app.get('/', function(req, res){
-  res.render("index.html", {host: 'http://' + req.headers.host.replace(CLIENT_SERVER_PORT, SOCKET_SERVER_PORT)});
+  var host = req.headers.host.replace(CLIENT_SERVER_PORT, SOCKET_SERVER_PORT);
+  if (host.indexOf(':') == -1)
+    host += ':' + SOCKET_SERVER_PORT;
+  res.render("index.html", {host: 'http://' + host});
 });
 
 app.listen(CLIENT_SERVER_PORT);
