@@ -9,7 +9,7 @@ var TileMap = function(w, h) {
 	for (var i = 0; i < w; i++) {
 		tiles[i] = new Array(h);
 		for (var n = 0; n < h; n++) {
-			tiles[i][n] = 2;
+			tiles[i][n] = Math.floor(Math.random() * 3);
 		}
 	}
 
