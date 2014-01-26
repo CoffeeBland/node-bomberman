@@ -7,46 +7,21 @@
     <div id="container">
       <h1>NodePixiSocket Bomberman</h1>
       <div id="pregame">
-        <div>
-          <h4>Server address</h4>
-          <input type="text" name="server-addresss" id="server-addresss" placeholder="Server address" value="{{host}}" />
-        </div>
-        <br />
+        <h2>Welcome, games should automatically display as soon as possible</h2>
         <div>
           <h4>User name</h4>
-          <input type="text" class="stylized fontized" name="username" id="username" />
-          <a href="javascript:void(0);" id="set-server">Connect to server</a>
+          <input type="text" class="server-info" name="username" id="username" />
         </div>
         <div id="room-select">
 
         </div>
       </div>
       <div id="game">
+        <h2 class="game-name">This game's name</h2>
+        <canvas id="game-canvas"></canvas>
+
+        
       </div>
-
-      <div id="pregame">
-        <div id="step1">
-          <h4>Connect to a server</h4>
-          <input type="text" name="server-addresss" id="server-addresss" placeholder="Server address" value="{{host}}" />
-          <a href="javascript:void(0);" id="set-server">Connect to server</a>
-
-          <div style="text-align:center;">
-            <a href="javascript:void(0);" class="dev-set-server" data-url="http://localhost:{{port}}">http://localhost:{{port}}</a><br/>
-            <a href="javascript:void(0);" class="dev-set-server" data-url="http://bomberman.kiasaki.com">http://bomberman.kiasaki.com</a>
-          </div>
-
-        </div>
-        <div id="step2">
-          <h4>Pick a username</h4>
-          <input type="text" class="stylized fontized" name="username" id="username" />
-          <a href="javascript:void(0);" class="stylized fontized" id="set-username">Set username</a>
-        </div>
-        <div id="step3">
-          <h4>Choose a room</h4>
-          <div id="room-select">
-
-          </div>
-        </div>
         <div id="step4">
           <h4>Room: <span id="room-name"></span></h4>
           <p style="color:#fff;">
@@ -66,8 +41,6 @@
           </div>
         </div>
       </div>
-
-      <div id="game"></div>
     </div>
 
     <div id="connection-status" class="hidden fontized stylized"></div>
