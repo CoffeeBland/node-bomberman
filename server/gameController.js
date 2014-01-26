@@ -101,8 +101,8 @@ module.exports = (function() {
               rooms.splice(i, 1);
             }
           } else {
-            for (var i = rooms[i].getUsers().length - 1; i >= 0; i--) {
-              var uid = rooms[i].getUsers()[i].getID();
+            for (var j = rooms[i].getUsers().length - 1; j >= 0; j--) {
+              var uid = rooms[i].getUsers()[j].getID();
               if (uid == user.getID())
                 rooms[i].removePlayer(uid);
             }

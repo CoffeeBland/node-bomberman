@@ -10,6 +10,7 @@ var Server = function(serverName){
     serverName = 'http://' + serverName;
   var socket = io.connect(serverName);
 
+  socket.removeAllListeners('setUserId');
   socket.on('setUserId', function(data){
     currentUserID = data.id;
   });
@@ -20,26 +21,26 @@ var Server = function(serverName){
     STEPS.goTo(2);
 
     // Room json
+    socket.removeAllListeners('joinedRoom');
     socket.on('joinedRoom', function(data){
       if (joinRoomCallback)
         joinRoomCallback(data);
     });
-    // Room users json array
-    socket.on('updatedUsersInRoom', function(data){
-
-    });
     // New chat message { from: '', text: '' }
+    socket.removeAllListeners('getChat');
     socket.on('getChat', function(data){
       if (CHAT)
         CHAT.append(data);
     });
     // Room new user set
+    socket.removeAllListeners('updatedUsersInRoom');
     socket.on('updatedUsersInRoom', function(data){
       currentUsers = data;
       if (CHAT)
         CHAT.updateUsersInRoom(data);
     });
 
+    socket.removeAllListeners('disconnect');
     socket.on('disconnect', function(){
       if (disconnectCallback)
         disconnectCallback();
@@ -65,6 +66,7 @@ var Server = function(serverName){
   }
 
   function getRooms(callback) {
+    socket.removeAllListeners('roomData');
     socket.on('roomData', function(data) {
       STATUS.set('Retrived rooms!', 3000);
       callback(data);

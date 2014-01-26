@@ -10,6 +10,7 @@ var ChatManager = function(rid) {
         data.text+
       '</div>');
     $('#chat-toolbar textarea').val('');
+    $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
   }
 
   function updateUsersInRoom(data) {
