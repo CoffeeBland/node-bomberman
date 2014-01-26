@@ -5,8 +5,11 @@ var Engine = function() {
 		var d = t - time;
 		time = t;
 
-		for(var i = 0; i < actors.length; i++) {
+		var toRemove = [];
+		for(var i = actors.length - 1; i >= 0; i--) {
 			actors[i].update(d);
+			if (actors[i].shouldBeRemoved)
+				actors.splice(i, 1);
 		}
 	};
 
@@ -67,6 +70,13 @@ var Engine = function() {
 
 		playerCharacter: function(uid) {
 			return playerCharacters[uid];
+		},
+
+		placeBombAt: function(x, y, strength) {
+
+		},
+		fireUpAt: function(x, y strength) {
+
 		}
 	};
 };

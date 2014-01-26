@@ -20,6 +20,7 @@ var Character = function(x, y) {
 	var x, y, speed = 2;
 	var sx, sy, sw, sh;
 	var sprite, colorSprite, a, tmpA;
+	var bombStrength = 1;
 
 	return {
 		getX: function() {
@@ -44,7 +45,7 @@ var Character = function(x, y) {
 			y += currentEngine.getTileMap().longestDistanceForY(this.getX(), this.getY(), this.getSpeed());
 		},
 		placeBomb: function() {
-
+			currentEngine.placeBombAt(x, y, bombStrength)
 		},
 
 		setSourceX: function(sourceX) {
