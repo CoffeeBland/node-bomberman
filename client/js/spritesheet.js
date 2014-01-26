@@ -1,5 +1,4 @@
-function loadFramedSpriteSheet(textureUrl, textureName, frameWidth, frameHeight, cb)
-{
+function loadFramedSpriteSheet(textureUrl, textureName, frameWidth, frameHeight, cb) {
     var image = new PIXI.ImageLoader(textureUrl);
     var texture = image.texture.baseTexture;
     var frames=[];
@@ -23,24 +22,10 @@ function loadFramedSpriteSheet(textureUrl, textureName, frameWidth, frameHeight,
             }
         }
         
-        if (typeof cb == 'function')
-        {
+        if (typeof cb == 'function') {
             cb(frames);
         }
     });
     image.load();
     return frames;
 }
-loadFramedSpriteSheet('tileset.png', 'terrain', 32, 24, function(frames) {
-
-    var terrain = new PIXI.Sprite(frames[8]);
-    //we can also create the sprite from textureCache : 
-   //var terrain = PIXI.Sprite.fromFrame('terrain-8');
-
-    terrain.position.x = 0;
-    terrain.position.y = 0;
-    stage.addChild(terrain);
-
-    renderer.render(stage);
-
-});

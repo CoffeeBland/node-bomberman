@@ -42,12 +42,12 @@ var Game = function() {
 	}
 
 	return {
-		start: function(d){
+		start: function(d, p){
 			interval = window.setInterval(update, d);
 			window.onkeydown = keyDown;
 			window.onkeyup = keyUp;
 			currentRenderer.beginRender();
-			currentEngine.start(d);
+			currentEngine.start(d, p);
 		},
 		stop: function() {
 			if (interval)

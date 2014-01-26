@@ -22,7 +22,7 @@ var Engine = function() {
 			return actors;
 		},
 
-		start: function(d) {
+		start: function(d, p) {
 			interval = window.setInterval(update, d);
 		},
 		stop: function() {

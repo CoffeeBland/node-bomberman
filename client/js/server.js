@@ -1,6 +1,7 @@
 var Server = function(serverName){
   var currentUserID;
   var currentUsername;
+  var currentUsers;
 
   var joinRoomCallback = null;
   var disconnectCallback = null;
@@ -34,7 +35,7 @@ var Server = function(serverName){
     });
     // Room new user set
     socket.on('updatedUsersInRoom', function(data){
-      console.log({nreUsers: data})
+      currentUsers = data;
       if (CHAT)
         CHAT.updateUsersInRoom(data);
     });
@@ -101,6 +102,9 @@ var Server = function(serverName){
     },
     setDisconnectCallback: function(callback) {
       disconnectCallback = callback;
+    },
+    getCurrentUsers: function() {
+      return currentUsers || {};
     },
     getRooms: getRooms,
     addNewRoom: addNewRoom,

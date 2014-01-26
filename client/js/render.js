@@ -1,8 +1,4 @@
-// create a texture from an image path
-// var texture = PIXI.Texture.fromImage("/res/sprites/lapoule.jpg");
-// create a new Sprite using the texture
-// var lapoule = new PIXI.Sprite(texture);
-
+PIXI.Texture.SCALE_MODE.DEFAULT = PIXI.Texture.SCALE_MODE.NEAREST;
 var characterTexture = PIXI.BaseTexture.fromImage("/res/sprites/character.png");
 var characterColorTexture = PIXI.BaseTexture.fromImage("/res/sprites/character_color.png");
 var tilemapTexture = PIXI.BaseTexture.fromImage("/res/sprites/tilemap.png");
