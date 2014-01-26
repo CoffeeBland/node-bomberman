@@ -4,12 +4,17 @@ var Engine = function() {
 
 	};
 
-	var tilemap;
+	var tileMap;
 	var actors = [];
+	var playerCharacters = {};
 
 	return {
-		tilemap: tilemap,
-		actors: actors,
+		getTileMap: function() {
+			return tileMap;
+		},
+		getActors: function() {
+			return actors;
+		},
 
 		start: function(d) {
 			interval = window.setInterval(update, d);
@@ -17,6 +22,10 @@ var Engine = function() {
 		stop: function() {
 			if (interval)
 				window.stopInterval(interval);
+		},
+
+		playerCharacter: function(uid) {
+			return players[uid];
 		}
 	};
 };

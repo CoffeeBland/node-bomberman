@@ -2,10 +2,13 @@ body {
   background: #ccc;
   height: 100%;
   width: 100%;
+  text-align: center;
 }
 
 #container {
-  margin: 20px 10%;
+  margin: auto;
+  display: inline-block;
+  padding: 0 2em;
   background: #111;
   border: 2px solid #333;
   border-top: 2px solid #B13234;
@@ -20,12 +23,9 @@ body {
 }
 
 #container #game {
-  width: 480px;
   margin: 0px auto 20px;
 }
 
 canvas {
-	width: 480px;
-	height: 320px;
 	background-color: #08f;
 }

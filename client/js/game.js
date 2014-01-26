@@ -7,29 +7,28 @@ var Game = function() {
 		}
 	};
 
-	var renderer = new Renderer(420, 340, 0xff8800);
+	var renderer = new Renderer(640, 480, 0xff8800);
 
 	var keyMappings = {
 		38: function() { // Up
-
+			currentEngine.playerCharacter(uid).goUp();
 		},
 		37: function() { // Left
-
+			currentEngine.playerCharacter(uid).goLeft();
 		},
 		39 : function() { // Right
-
+			currentEngine.playerCharacter(uid).goRight();
 		},
 		40: function() { // Down
-
+			currentEngine.playerCharacter(uid).goDown();
 		}
 	};
 	var keyPressMappings = {
 		32: function() { // Spacebar
-
+			currentEngine.playerCharacter(uid).placeBomb();
 		}
 	};
 	var keyReleaseMappings = {
-
 	};
 
 	var keys = {};
