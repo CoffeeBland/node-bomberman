@@ -9,9 +9,10 @@ var TileMap = function(w, h) {
 	for (var i = 0; i < w; i++) {
 		tiles[i] = new Array(h);
 		for (var n = 0; n < h; n++) {
-			tiles[i][n] = i != 0 ? Math.floor(Math.random() * 3) : 2;
-			if (Math.random() < 0.50)
-				tiles[i][n] = 2;
+			if (i == 0 || i == w - 1 || n == 0 || n == h - 1)
+				tiles[i][n] = 0;
+			else
+				tiles[i][n] = Math.floor(Math.random() * 2) + 1;
 		}
 	}
 

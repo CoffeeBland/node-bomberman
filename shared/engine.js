@@ -25,7 +25,7 @@ var Engine = function() {
 			return playerCharacters;
 		},
 		addPlayer: function(name, uid) {
-			var c = new Character(0, 0);
+			var c = new Character(26, 26);
 			if (currentRenderer != "undefined") {
 				c.setSpriteSheet(100);
 			}

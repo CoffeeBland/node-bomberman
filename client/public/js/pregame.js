@@ -21,6 +21,7 @@ $('.dev-set-server').on('click', function(){
 function setUsername(){
   var username = $('#username').val().replace(/</g, '').replace(/>/g, '');
   if (username.length >= 3) {
+    localStorage["username"] = username;
     SERVER.setUsername(username);
     STEPS.goTo(3);
     startRoomSelect();
@@ -33,6 +34,8 @@ $('#username').on('keypress', function(e){
   if (e.keyCode == 13)
     setUsername();
 });
+if (localStorage["username"])
+  $('#username').val(localStorage["username"]);
 
 /***************************************
   STEP 3: Room select
