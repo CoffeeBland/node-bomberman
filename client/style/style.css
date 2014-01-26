@@ -54,7 +54,14 @@ h4 {
   background: #111;
   border: 2px solid #333;
   border-top: 2px solid #B13234;
+  max-width: 840px;
 }
+
+#step1, #step2, #step3, #step4 {
+  max-width: 600px;
+  margin: 10px auto 20px;
+}
+
 #container h1 {
   margin: 0;
   padding: 20px 0;
@@ -114,6 +121,9 @@ h4 {
   cursor: pointer;
 }
 
+#container #step4 #room-users div {
+  width: 600px;
+}
 #container #step4 #chat-box {
   position: relative;
   height: 400px;
