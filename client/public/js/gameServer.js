@@ -5,6 +5,7 @@ var GameServer = function(gameId, currentUserId, thaSocket, gameObject) {
   var game = gameObject;
 
   socket.on('playerEvent', function(data){
+    console.log(data);
     var char = game.getCharacter(data.uid);
     char[data.func].apply(char, data.args);
   });

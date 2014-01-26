@@ -27,6 +27,7 @@ var Game = function(gameUsers, ownerId) {
   function startGame() {
     var usersNeeded = 0;
     var usersReady = 0;
+    console.log(users);
     for (var i = users.length - 1; i >= 0; i--) {
       if (users[i]) {
         usersNeeded++;

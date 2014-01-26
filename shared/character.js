@@ -49,8 +49,9 @@ var Character = function(x, y) {
 		},
 
 		teleport: function(nx, ny) {
-			x = nx * 24;
-			y = ny * 24;
+			console.log(this);
+			this.x = nx * 24;
+			this.y = ny * 24;
 		},
 
 		setSourceX: function(sourceX) {
