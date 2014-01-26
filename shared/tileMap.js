@@ -25,6 +25,16 @@ var TileMap = function(w, h) {
 		tileSize
 	);
 	var isRendering = false;
+	var spawnPoints = [
+		{x: 1 * tileSize + 3, y: 1 * tileSize + 3},
+		{x: 10 * tileSize + 3, y: 1 * tileSize + 3},
+		{x: 19 * tileSize + 3, y: 1 * tileSize + 3},
+		{x: 1 * tileSize + 3, y: 10 * tileSize + 3},
+		{x: 19 * tileSize + 3, y: 10 * tileSize + 3},
+		{x: 1 * tileSize + 3, y: 19 * tileSize + 3},
+		{x: 10 * tileSize + 3, y: 19 * tileSize + 3},
+		{x: 19 * tileSize + 3, y: 19 * tileSize + 3},
+	]
 
 	this.generateMap = function() {
 		return new TileMap(24, 24);
@@ -56,6 +66,9 @@ var TileMap = function(w, h) {
 					if (this.getTiles()[ix][iy] != 2)
 						return 0;
 			return distance;
+		},
+		spawnPointFor: function(playerNumber) {
+			return spawnPoints[playerNumber];
 		},
 
 		startRender: function() {

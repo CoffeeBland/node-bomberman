@@ -13,6 +13,16 @@ var Engine = function() {
 	var tileMap;
 	var actors = [];
 	var playerCharacters = {};
+	var playerColors = [
+		0xFF2200,
+		0x0088FF,
+		0x66FF22,
+		0xEE00BB,
+		0x00CCBB,
+		0xFFEE00,
+		0xEEEEEE,
+		0x333333
+	];
 
 	return {
 		getTileMap: function() {
@@ -24,10 +34,10 @@ var Engine = function() {
 		getPlayerCharacters: function() {
 			return playerCharacters;
 		},
-		addPlayer: function(name, uid) {
+		addPlayer: function(name, uid, playerNumber) {
 			var c = new Character(26, 26);
 			if (currentRenderer != "undefined") {
-				c.setSpriteSheet(100);
+				c.setSpriteSheet(100, playerColors[playerNumber]);
 			}
 			this.getActors().push(c);
 			playerCharacters[uid] = c;
@@ -43,7 +53,7 @@ var Engine = function() {
 					tileMap.startRender();
 				}
 				for (var i = 0; i < p.length; i++) {
-					self.addPlayer(p[i].name, p[i].id);
+					self.addPlayer(p[i].name, p[i].id, i);
 				}
 			}, 0);
 		},

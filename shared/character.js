@@ -82,7 +82,7 @@ var Character = function(x, y) {
 		  colorSprite.setTexture(characterColorTextureSheetFrames[sx][sy]);
 		},
 
-		setSpriteSheet: function(anim) {
+		setSpriteSheet: function(anim, color) {
 			if (!characterTextureSheetFrames || !characterColorTextureSheetFrames)
 				loadCharacterSpriteSheets();
 
@@ -96,7 +96,7 @@ var Character = function(x, y) {
 			tmpA = anim;
 			currentRenderer.addSprite(sprite);
 			currentRenderer.addSprite(colorSprite);
-			colorSprite.tint = 0x00FF00;
+			colorSprite.tint = color;
 		},
 		die: function() {
 				if (!sprite)
