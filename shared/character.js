@@ -1,5 +1,5 @@
 var Character = function(x, y) {
-	var x, y, speed;
+	var x, y, speed = 0.5;
 
 	return {
 		getX: function() {

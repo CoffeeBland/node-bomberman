@@ -8,7 +8,7 @@ var TileMap = function(w, h) {
 	for (var i = 0; i < h; i++) {
 		tiles[i] = new Array(h);
 	}
-
+	
 	var tileSize = 24;
 
 	return {
