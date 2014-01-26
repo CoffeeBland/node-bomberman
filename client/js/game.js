@@ -53,7 +53,7 @@ var Game = function() {
 		},
 		stop: function() {
 			if (interval)
-				window.stopInterval(interval);
+				window.clearInterval(interval);
 			window.onkeydown = null;
 			window.onkeyup = null;
 			renderer.stopRender();

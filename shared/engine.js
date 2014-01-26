@@ -21,7 +21,7 @@ var Engine = function() {
 		},
 		stop: function() {
 			if (interval)
-				window.stopInterval(interval);
+				window.clearInterval(interval);
 		},
 
 		playerCharacter: function(uid) {
