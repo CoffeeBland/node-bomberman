@@ -1,19 +1,47 @@
 var Game = function() {
 	var interval;
 	var update = function() {
-
+		for(var key in keys) {
+			if (keyMappings[key])
+				keyMappings[key]();
+		}
 	};
 
 	var renderer = new Renderer(420, 340, 0xff8800);
-	var engine = new Engine();
 
+	var keyMappings = {
+		38: function() { // Up
+
+		},
+		37: function() { // Left
+
+		},
+		39 : function() { // Right
+
+		},
+		40: function() { // Down
+
+		}
+	};
+	var keyPressMappings = {
+		32: function() { // Spacebar
+
+		}
+	};
+	var keyReleaseMappings = {
+
+	};
 
 	var keys = {};
-	var keyDown = function(k) {
-		keys[k.keyCode] = true;
+	var keyDown = function(e) {
+		keys[e.keyCode] = true;
+		if(keyPressMappings[e.keyCode]) 
+			keyPressMappings[e.keyCode]();
 	};
-	var keyUp = function(k) {
-		keys[k.keyCode] = false;
+	var keyUp = function(e) {
+		keys[e.keyCode] = false;
+		if(keyReleaseMappings[e.keyCode]) 
+			keyReleaseMappings[e.keyCode]();
 	}
 
 	return {
@@ -22,7 +50,7 @@ var Game = function() {
 			window.onkeydown = keyDown;
 			window.onkeyup = keyUp;
 			renderer.beginRender();
-			engine.start(d);
+			currentEngine.start(d);
 		},
 		stop: function() {
 			if (interval)
@@ -30,7 +58,7 @@ var Game = function() {
 			window.onkeydown = null;
 			window.onkeyup = null;
 			renderer.stopRender();
-			engine.stop();
+			currentEngine.stop();
 		}
 	};
 };

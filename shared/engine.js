@@ -20,3 +20,5 @@ var Engine = function() {
 		}
 	};
 };
+
+var currentEngine = new Engine();
