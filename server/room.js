@@ -17,7 +17,12 @@ var Room = function(initialName){
   function getUsersJsonArray() {
     var usersData = [];
     for (var i = users.length - 1; i >= 0; i--) {
-      usersData.push(users[i].toJson());
+      var uData = users[i].toJson();
+      if (uData.id == ownerId)
+        uData.owner = true;
+      else
+        uData.owner = false;
+      usersData.push(uData);
     };
     return usersData;
   }
@@ -40,14 +45,14 @@ var Room = function(initialName){
 
   function removePlayers(exceptThisId) {
     for (var i = users.length - 1; i >= 0; i--) {
-      if (users[i].getID() != exceptThisId)
+      if (users[i] && users[i].getID() != exceptThisId)
         users[i].getSocket().disconnect();
     };
   }
 
   function removePlayer(uid) {
     for (var i = users.length - 1; i >= 0; i--) {
-      if (users[i].getID() == uid)
+      if (users[i] && users[i].getID() == uid)
         users.splice(i,1);
     };
     sendUpdatedUserList();
@@ -58,6 +63,14 @@ var Room = function(initialName){
       if (users[i] != null)
         ownerId = users[i].getID();
     }
+  }
+
+  function startGame() {
+    for (var i = users.length - 1; i >= 0; i--) {
+      if (users[i]) {
+        users[i].getSocket().emit('startingGame', getUsersJsonArray());
+      }
+    };
   }
 
   return {
@@ -95,6 +108,7 @@ var Room = function(initialName){
     removePlayer: removePlayer,
     removePlayers: removePlayers,
     selectNewOwner: selectNewOwner,
+    startGame: startGame,
     toJson: function() {
       return {
         id: id,
