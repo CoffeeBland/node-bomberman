@@ -1,7 +1,13 @@
 var Engine = function() {
-	var interval;
+	var interval, time = window.performance.now();
 	var update = function() {
+		var t = window.performance.now();
+		var d = t - time;
+		time = t;
 
+		for(var actor in actors) {
+			actor.update(d);
+		}
 	};
 
 	var tileMap;
@@ -30,4 +36,4 @@ var Engine = function() {
 	};
 };
 
-var currentEngine = new Engine();
+var currentEngine = new Engine(640, 480, 0xff8800);

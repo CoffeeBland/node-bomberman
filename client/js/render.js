@@ -3,6 +3,11 @@
 // create a new Sprite using the texture
 // var lapoule = new PIXI.Sprite(texture);
 
+var characterTexture = PIXI.BaseTexture.fromImage("/res/sprites/character.png");
+var characterColorTexture = PIXI.BaseTexture.fromImage("/res/sprites/character_color.png");
+var tilemapTexture = PIXI.BaseTexture.fromImage("/res/sprites/tilemap.png");
+var bombTexture = PIXI.BaseTexture.fromImage("/res/sprites/bomb.png");
+
 var Renderer = function(w, h, c) {
 	var stage = new PIXI.Stage(c);
 	var renderer = PIXI.autoDetectRenderer(w, h);
@@ -19,11 +24,11 @@ var Renderer = function(w, h, c) {
 	}
 
 	return {
-		addTexture: function(texture) {
-			stage.addChild(texture);
+		addSprite: function(sprite) {
+			stage.addChild(sprite);
 		},
-		removeTexture: function(texture) {
-			stage.removeChild(texture);
+		removeSprite: function(sprite) {
+			stage.removeChild(sprite);
 		},
 
 		beginRender: function() {
@@ -42,3 +47,5 @@ var Renderer = function(w, h, c) {
 		}
 	};
 }
+
+var currentRenderer = new Renderer();

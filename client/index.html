@@ -36,6 +36,9 @@
 		<script>
 			var game = new Game();
 			game.start();
+			var c = new Character(16, 16);
+			c.setSpriteSheet(characterTexture, 24, 32, 16);
+			currentEngine.actors.push(c);
 		</script>
 	</body>
 </html>

@@ -7,8 +7,6 @@ var Game = function() {
 		}
 	};
 
-	var renderer = new Renderer(640, 480, 0xff8800);
-
 	var keyMappings = {
 		38: function() { // Up
 			currentEngine.playerCharacter(uid).goUp();
@@ -48,7 +46,7 @@ var Game = function() {
 			interval = window.setInterval(update, d);
 			window.onkeydown = keyDown;
 			window.onkeyup = keyUp;
-			renderer.beginRender();
+			currentRenderer.beginRender();
 			currentEngine.start(d);
 		},
 		stop: function() {
@@ -56,7 +54,7 @@ var Game = function() {
 				window.clearInterval(interval);
 			window.onkeydown = null;
 			window.onkeyup = null;
-			renderer.stopRender();
+			currentRenderer.stopRender();
 			currentEngine.stop();
 		}
 	};
