@@ -1,0 +1,19 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<link rel="stylesheet" type="text/css" href="/style/style.css">
+		<script src="http://localhost:8081/socket.io/socket.io.js"></script>
+		<script src="/js/pixi.dev.js"></script>
+		<script>
+		  var socket = io.connect('http://localhost:8081');
+		  socket.on('news', function (data) {
+		    console.log(data);
+		    socket.emit('my other event', { my: 'data' });
+		  });
+		  socket.emit("I love pancakes", { position: "42"});
+		</script>
+		<h1>En veuhnir</h1>
+		<script src="/js/render.js"></script>
+	</body>
+</html>
