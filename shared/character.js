@@ -2,6 +2,20 @@ var Tilemap = function(x, y) {
 	var x, y
 
 	return {
-		tiles: tiles
+		goUp: function() {
+
+		},
+		goLeft: function() {
+
+		},
+		goRight: function() {
+
+		},
+		goDown: function() {
+
+		},
+		placeBomb: function() {
+
+		}
 	};
 };

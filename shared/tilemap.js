@@ -10,6 +10,10 @@ var Tilemap = function(w, h) {
 	}
 
 	return {
-		tiles: tiles
+		tiles: tiles,
+
+		tileIsWalkable: function(x, y) {
+			
+		}
 	};
 };

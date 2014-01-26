@@ -1,33 +1,44 @@
-// create an new instance of a pixi stage
-var stage = new PIXI.Stage(0x66FF99);
-
-// create a renderer instance.
-var renderer = PIXI.autoDetectRenderer(480, 320);
-
-// add the renderer view element to the DOM
-document.body.appendChild(renderer.view);
-
-
 // create a texture from an image path
-var texture = PIXI.Texture.fromImage("/res/sprites/lapoule.jpg");
+// var texture = PIXI.Texture.fromImage("/res/sprites/lapoule.jpg");
 // create a new Sprite using the texture
-var lapoule = new PIXI.Sprite(texture);
+// var lapoule = new PIXI.Sprite(texture);
 
-// center the sprites anchor point
-lapoule.anchor.x = 0.45;
-lapoule.anchor.y = 0.6;
+var Renderer = function(w, h, c) {
+	var stage = new PIXI.Stage(c);
+	var renderer = PIXI.autoDetectRenderer(w, h);
+	document.body.appendChild(renderer.view);
 
-// move the sprite t the center of the screen
-lapoule.position.x = 250;
-lapoule.position.y = 150;
+	var abortRender = false;
+	var render = function() {
+		if (abortRender) {
+			abortRender = false;
+			return;
+		}
+		requestAnimFrame(render);
+		renderer.render(stage);
+	}
 
-stage.addChild(lapoule);
+	return {
+		addTexture: function(texture) {
+			stage.addChild(texture);
+		},
+		removeTexture: function(texture) {
+			stage.removeChild(texture);
+		},
 
-requestAnimFrame(animate);
-function animate() {
-  requestAnimFrame(animate);
-        lapoule.rotation += 0.1;
+		beginRender: function() {
+			requestAnimFrame(render);
+			render();
+		},
+		stopRender: function() {
+			abortRender = true;
+		},
 
-  // render the stage   
-  renderer.render(stage);
+		stage: function() {
+			return stage;
+		},
+		renderer: function() {
+			return renderer;
+		}
+	};
 }
