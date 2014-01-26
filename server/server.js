@@ -1,32 +1,40 @@
-CLIENT_SERVER_PORT = process.env.PORT || 1337;
-var express = require('express')
-  , fs = require('fs')
-  , engines = require('consolidate');
+var GameRepository = require('./repositories/gameRepository')
+  , Game = require('./models/game')
+  , Player = require('./models/player');
 
-var app = express()
-  , http = require('http');
+module.exports = function(server, port) {
+  var io = require('socket.io').listen(server);
 
-server = http.createServer(app);
+  var games = new GameRepository();
+  var playersSearchingGame = new PlayerRepository();
 
-// Web server part
-app.configure(function(){
-  app.engine('html', engines.hogan);
+  io.sockets.on('connection', function (socket) {
 
-  app.use(express.static(__dirname + '/../client/public'));
-  app.use(express.static(__dirname + '/../shared'));
+    socket.on('gamesGet', function(data){
+      var player = new Player(data.name, socket);
+      playersSearchingGame.addPlayer(player);
+      socket.emit('playerConnection', {
+        playerInfo: player.toJson(),
+        games: []
+      });
+    });
 
-  app.set("views", __dirname + "/../client/views")
-});
+    socket.on('gamesChoose', function(data){
+      var player = playersSearchingGame.findById(data.pid);
+      var game = null;
+      if (data.rid) {
+        game = games.findById(data.rid);
+      } else if (data.gameName) {
+        game = new Game(data.gameName, player.getId());
+        games.addGame(game);
+      }
+      playersSearchingGame.removePlayer(player);
+      game.addPlayer(player);
+      socket.emit('gameJoin', game.toJson());
+    });
 
-// Routes
-app.get('/', function(req, res){
-  res.render("index.html", {host: 'http://' + req.headers.host, port: CLIENT_SERVER_PORT});
-});
+  });
 
-server.listen(CLIENT_SERVER_PORT);
-
-// Sockets.io part
-var gameController = require('./gameController');
-gameController.boot();
+}
 
 

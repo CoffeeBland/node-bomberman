@@ -14,9 +14,8 @@ To start the server
 
 Url's to point your browser at will be:
 
-	localhost:8080 -> client
-	localhost:8081 -> socket.io server (i.e. server name asked by the game client)
-	
+	localhost:1337 -> client & socket.io server
+
 ## Credits
 
 Made/Started during the __Montréal Game Jam 2014__ by the magnificient, talented and sleepless individuals named as follows:
