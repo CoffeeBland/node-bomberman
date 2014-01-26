@@ -27,7 +27,7 @@ var Engine = function() {
 		addPlayer: function(name, uid) {
 			var c = new Character(0, 0);
 			if (currentRenderer != "undefined") {
-				c.setSpriteSheet(characterTexture, characterColorTexture, 3, 4, 8);
+				c.setSpriteSheet(100);
 			}
 			this.getActors().push(c);
 			playerCharacters[uid] = c;
@@ -54,4 +54,4 @@ var Engine = function() {
 	};
 };
 
-var currentEngine = new Engine();
+var currentEngine;

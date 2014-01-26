@@ -1,7 +1,25 @@
+var characterTextureSheetFrames;
+var characterColorTextureSheetFrames;
+
+var loadCharacterSpriteSheets = function() {
+	var fw = 24, fh = 32, fcw = 3, fch = 4;
+	characterTextureSheetFrames = new Array(fcw);
+	characterColorTextureSheetFrames = new Array(fcw);
+	for (var nx = 0; nx < fcw; nx++) {
+		characterTextureSheetFrames[nx] = new Array(fch);
+		characterColorTextureSheetFrames[nx] = new Array(fch);
+		for (var ny = 0; ny < fch; ny++) {
+			var frame = new PIXI.Rectangle(nx * fw, ny * fh, fw, fh);
+			characterTextureSheetFrames[nx][ny] = new PIXI.Texture(characterTexture, frame);
+			characterColorTextureSheetFrames[nx][ny] = new PIXI.Texture(characterColorTexture, frame);
+		}
+	}
+}
+
 var Character = function(x, y) {
 	var x, y, speed = 0.5;
 	var sx, sy, sw, sh;
-	var spriteSheet, colorSpriteSheet, a, tmpA;
+	var sprite, colorSprite, a, tmpA;
 
 	return {
 		getX: function() {
@@ -31,44 +49,46 @@ var Character = function(x, y) {
 
 		setSourceX: function(sourceX) {
 			sx = sourceX;
-			while (sx > sw)
+			while (sx >= sw)
 				sx -= sw;
-		  spriteSheet.anchor.x = (sx * sw) / spriteSheet.width;
-		  colorSpriteSheet.anchor.x = (sx * sw) / spriteSheet.width;
+		  sprite.setTexture(characterTextureSheetFrames[sx][sy]);
+		  colorSprite.setTexture(characterColorTextureSheetFrames[sx][sy]);
 		},
 		getSourceX: function(sourceX) {
 			return sx;
 		},
 		setSourceY: function(sourceY) {
 			sy = sourceY;
-			while (sy > sh)
+			while (sy >= sh)
 				sy -= sh;
-			spriteSheet.anchor.y = (sy * sh) / spriteSheet.height;
-			colorSpriteSheet.anchor.y = (sy * sh) / spriteSheet.height;
+		  sprite.setTexture(characterTextureSheetFrames[sx][sy]);
+		  colorSprite.setTexture(characterColorTextureSheetFrames[sx][sy]);
 		},
 
-		setSpriteSheet: function(texture, colorTexture, w, h, anim) {
-		  frame = new PIXI.Rectangle(0, 0, texture.width / w, texture.height / h);
-			spriteSheet = new PIXI.Sprite(new PIXI.Texture(texture, frame));
-			colorSpriteSheet = new PIXI.Sprite(new PIXI.Texture(colorTexture, frame));
+		setSpriteSheet: function(anim) {
+			if (!characterTextureSheetFrames || !characterColorTextureSheetFrames)
+				loadCharacterSpriteSheets();
+
+			sprite = new PIXI.Sprite(characterTextureSheetFrames[0][0]);
+			colorSprite = new PIXI.Sprite(characterColorTextureSheetFrames[0][0]);
 			sx = 0;
 			sy = 0;
-			sw = w;
-			sh = h;
+			sw = characterTextureSheetFrames.length;
+			sh = characterTextureSheetFrames[0].length;
 			a = anim;
 			tmpA = anim;
-			currentRenderer.addSprite(spriteSheet);
-			currentRenderer.addSprite(colorSpriteSheet);
+			currentRenderer.addSprite(sprite);
+			currentRenderer.addSprite(colorSprite);
 		},
 		die: function() {
-				if (!spriteSheet)
+				if (!sprite)
 					return;
 
-				currentRenderer.removeSprite(spriteSheet);
-				currentRenderer.removeSprite(colorSpriteSheet);
+				currentRenderer.removeSprite(sprite);
+				currentRenderer.removeSprite(colorSprite);
 		},
 		update: function(d) {
-			if (!spriteSheet)
+			if (!sprite)
 				return;
 
 			tmpA -= d;
@@ -76,8 +96,8 @@ var Character = function(x, y) {
 				tmpA += a;
 				this.setSourceX(this.getSourceX() + 1);
 			}
-			spriteSheet.position.x = x;
-			spriteSheet.position.y = y;
+			sprite.position.x = x;
+			colorSprite.position.y = y;
 		}
 	};
 };

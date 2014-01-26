@@ -7,7 +7,7 @@ var bombTexture = PIXI.BaseTexture.fromImage("/res/sprites/bomb.png");
 var Renderer = function(w, h, c) {
 	var stage = new PIXI.Stage(c);
 	var renderer = PIXI.autoDetectRenderer(w, h);
-	document.getElementById('game').appendChild(renderer.view);
+	document.getElementById('game').appendChild(renderer.view);;
 
 	var abortRender = false;
 	var render = function() {
@@ -44,4 +44,4 @@ var Renderer = function(w, h, c) {
 	};
 }
 
-var currentRenderer = new Renderer(640, 480, 0xff8800);
+var currentRenderer;

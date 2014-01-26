@@ -43,6 +43,12 @@ var Game = function() {
 
 	return {
 		start: function(d, p){
+			console.log("WAT")
+			if (!currentRenderer)
+				currentRenderer = new Renderer(640, 480, 0xff8800);
+			if (!currentEngine)
+				currentEngine = new Engine();
+				
 			interval = window.setInterval(update, d);
 			window.onkeydown = keyDown;
 			window.onkeyup = keyUp;
