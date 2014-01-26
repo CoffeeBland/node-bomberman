@@ -1,4 +1,4 @@
-var io = require('socket.io').listen(SOCKET_SERVER_PORT);
+var io = require('socket.io').listen(server);
 var Room = require('./room');
 var Game = require('./game');
 var User = require('../shared/user');

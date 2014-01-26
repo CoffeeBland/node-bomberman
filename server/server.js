@@ -1,9 +1,12 @@
-CLIENT_SERVER_PORT = process.env.PORT || 8080;
-SOCKET_SERVER_PORT = process.env.SOCKET_SERVER_PORT || 1337;
+CLIENT_SERVER_PORT = process.env.PORT || 1337;
 var express = require('express')
-  , app = express()
   , fs = require('fs')
   , engines = require('consolidate');
+
+var app = express()
+  , http = require('http');
+
+server = http.createServer(app);
 
 // Web server part
 app.configure(function(){
@@ -20,15 +23,13 @@ app.get('/', function(req, res){
   var host = req.headers.host.replace(CLIENT_SERVER_PORT, SOCKET_SERVER_PORT);
   if (host.indexOf(':') == -1)
     host += ':' + SOCKET_SERVER_PORT;
-  res.render("index.html", {host: 'http://' + host});
+  res.render("index.html", {host: 'http://' + host, port: CLIENT_SERVER_PORT});
 });
 
-app.listen(CLIENT_SERVER_PORT);
+server.listen(CLIENT_SERVER_PORT);
 
 // Sockets.io part
 var gameController = require('./gameController');
 gameController.boot();
-
-//var GIMME_SOCKETS = gameController.getSockets;
 
 
