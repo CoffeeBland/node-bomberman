@@ -65,14 +65,6 @@ var Room = function(initialName){
     }
   }
 
-  function startGame() {
-    for (var i = users.length - 1; i >= 0; i--) {
-      if (users[i]) {
-        users[i].getSocket().emit('startingGame', getUsersJsonArray());
-      }
-    };
-  }
-
   return {
     getID: function() {
       return id;
@@ -108,7 +100,7 @@ var Room = function(initialName){
     removePlayer: removePlayer,
     removePlayers: removePlayers,
     selectNewOwner: selectNewOwner,
-    startGame: startGame,
+    users: users,
     toJson: function() {
       return {
         id: id,

@@ -6,6 +6,7 @@ var User = require('../shared/user');
 module.exports = (function() {
   var users = [];
   var rooms = [];
+  var games = [];
 
   function boot() {
     // Sockets.io boot
@@ -27,6 +28,13 @@ module.exports = (function() {
       }
     };
     return null;
+  }
+  function removeById(items, id) {
+    for (var i = items.length - 1; i >= 0; i--) {
+      if (items[i] && items[i].getID() == id) {
+        items.splice(i, 1);
+      }
+    };
   }
 
   function getAbbreviatedRoomData() {
@@ -100,7 +108,10 @@ module.exports = (function() {
     socket.on('startGame', function(data){
       var room = findById(rooms, data.rid);
       if (room.getOwnerID() == user.getID()) {
-        room.startGame();
+        var users = room.users;
+        var game = new Game(users);
+        removeById(rooms, data.rid);
+        game.startGame();
       }
     });
 

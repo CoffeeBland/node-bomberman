@@ -39,15 +39,13 @@ var Server = function(serverName){
       if (CHAT)
         CHAT.updateUsersInRoom(data);
     });
-    // Start game rendering
+    // Start game rendering (gives a game json)
     socket.removeAllListeners('startingGame');
     socket.on('startingGame', function(data){
       STEPS.goTo(5);
+      var GAME_SERVER = new GameServer(data.id, socket);
       var game = new Game();
-      game.start(
-        1000 / 60,
-        data
-      );
+      game.start(1000 / 60, data.users);
     });
 
     socket.removeAllListeners('disconnect');
