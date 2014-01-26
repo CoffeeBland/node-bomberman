@@ -23,4 +23,6 @@ app.listen(8080);
 var gameController = require('./gameController');
 gameController.boot();
 
+//var GIMME_SOCKETS = gameController.getSockets;
+
 

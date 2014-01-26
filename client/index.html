@@ -1,44 +1,165 @@
 <html>
-	<head>
-	</head>
-	<body>
-		<link rel="stylesheet" type="text/css" href="/style/style.css">
+  <head>
+    <title>NodePixiSocket Bomberman</title>
+  </head>
+  <body>
+    <link rel="stylesheet" type="text/css" href="/style/style.css">
 
-		<!-- Networking with server -->
-		<script src="http://localhost:8081/socket.io/socket.io.js"></script>
-		<script src="/js/pixi.dev.js"></script>
-		<script>
-		  var socket = io.connect('http://localhost:8081');
-		  socket.on('news', function (data) {
-		    console.log(data);
-		    socket.emit('my other event', { my: 'data' });
-		  });
-		  socket.emit("I love pancakes", { position: "42"});
-		</script>
+    <!-- Networking with server -->
+    <script src="http://localhost:8081/socket.io/socket.io.js"></script>
+    <!-- Libs -->
+    <script src="/js/pixi.dev.js"></script>
+    <script src="/js/jquery.min.js"></script>
 
-		<div id="container">
-			<h1>NodePixiSocket Bomberman</h1>
+    <div id="container">
+      <h1>NodePixiSocket Bomberman</h1>
 
-			<div id="game"></div>
+      <div id="pregame">
+        <div id="step1">
+          <h4>Connect to a server</h4>
+          <input type="text" name="server-addresss" id="server-addresss" placeholder="Server address" />
+          <a href="javascript:void(0);" id="set-server">Connect to server</a>
 
-			<script src="/js/render.js"></script>
-		</div>
+          <div style="text-align:center;">
+            <a href="javascript:void(0);" class="dev-set-server" data-url="http://localhost:8081">http://localhost:8081</a><br/>
+            <a href="javascript:void(0);" class="dev-set-server" data-url="http://bomber.kiasaki.com:443">http://bomber.kiasaki.com:443</a>
+          </div>
 
-		<!-- Engine -->
-		<script src="/character.js"></script>
-		<script src="/tileMap.js"></script>
-		<script src="/engine.js"></script>
+        </div>
+        <div id="step2">
+          <h4>Pick a username</h4>
+          <input type="text" class="stylized fontized" name="username" id="username" />
+          <a href="javascript:void(0);" class="stylized fontized" id="set-username">Set username</a>
+        </div>
+        <div id="step3">
+          <h4>Choose a room</h4>
+          <div id="room-select">
 
-		<!-- Game (render & client-specific) -->
-		<script src="/js/camera.js"></script>
-		<script src="/js/game.js"></script>
-		<script src="/js/render.js"></script>
-		<script>
-			var game = new Game();
-			game.start();
-			var c = new Character(16, 16);
-			c.setSpriteSheet(characterTexture, 24, 32, 16);
-			currentEngine.actors.push(c);
-		</script>
-	</body>
+          </div>
+        </div>
+        <div id="step4">
+          <h4>Room: <span id="room-name"></span></h4>
+          <p style="color:#fff;">
+            <span id="room-count"></span> / <span id="room-cap"></span> players
+          </p>
+          <div id="room-users"></div>
+          <div id="chat-box" class="stylized stylized-light boxed fontized">
+            <div id="chat-messages"></div>
+            <div id="chat-toolbar">
+              <textarea name="message" id="chat-message" rows="2"></textarea>
+              <a href="javascript:void(0);">Send</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="game"></div>
+
+      <script src="/js/render.js"></script>
+    </div>
+
+    <div id="connection-status" class="hidden fontized stylized"></div>
+
+    <!-- Engine -->
+    <script src="/character.js"></script>
+    <script src="/tilemap.js"></script>
+    <script src="/engine.js"></script>
+
+    <!-- Game (render & client-specific) -->
+    <script src="/js/camera.js"></script>
+    <script src="/js/game.js"></script>
+    <script src="/js/render.js"></script>
+
+    <!-- GUI / Pregame -->
+    <script src="/js/server.js"></script>
+    <script src="/js/statusManager.js"></script>
+    <script src="/js/stepsManager.js"></script>
+    <script src="/js/chatManager.js"></script>
+    <script>
+      function setDisconnectCallback() {
+        SERVER.setDisconnectCallback(function(){
+          STEPS.goTo(1);
+        });
+      }
+
+      $('#set-server').on('click', function(){
+        SERVER = new Server($('#server-addresss').val());
+        setDisconnectCallback();
+      });
+      $('.dev-set-server').on('click', function(){
+        SERVER = new Server($(this).attr('data-url'));
+        setDisconnectCallback();
+      });
+
+      function setUsername(){
+        var username = $('#username').val().replace(/</g, '').replace(/>/g, '');
+        if (username.length >= 3) {
+          SERVER.setUsername(username);
+          STEPS.goTo(3);
+          startRoomSelect();
+        } else {
+          alert('Username must be at least 3 characters long.');
+        }
+      }
+      $('#set-username').on('click', setUsername);
+      $('#username').on('keypress', function(e){
+        if (e.keyCode == 13)
+          setUsername();
+      });
+
+      function startRoomSelect() {
+        $display = $('#room-select');
+        $display.empty().append('<p style="color:#fff;">Loading...</p>');
+        SERVER.getRooms(function(roomsData){
+          if (roomsData.length == 0) {
+            $display.empty().append('<br/><br/><div class="stylized stylized-light boxed fontized">No rooms on this server!</div>');
+          } else {
+            $display.empty();
+            for (var i = roomsData.length - 1; i >= 0; i--) {
+              $display.append('<div class="stylized stylized-light boxed fontized room-box">' +
+                  roomsData[i].name + ' - ' + roomsData[i].userCount + '/' + roomsData[i].userCap + ' players' +
+                  '<a class="pull-right join-room" data-id="' + roomsData[i].id + '">Join</a>' +
+                '</div>');
+            };
+          }
+          $display.append('<a href="javascript:void(0);" class="stylized half-btn boxed fontized" id="refresh-rooms">Refresh</a>');
+          $display.append('<a href="javascript:void(0);" class="stylized half-btn boxed fontized" id="create-room">Create room</a>');
+          console.log(roomsData);
+        });
+      }
+
+      $("body").on('click', '#refresh-rooms', function(){
+        startRoomSelect();
+      });
+      $("body").on('click', '#create-room', function(){
+        var roomName = prompt("What is the room name?", (Math.round(Math.random()*1000000)).toString());
+        if (roomName != null) {
+          SERVER.addNewRoom(roomName, function(room){
+            STEPS.goTo(4);
+            joinRoom(room);
+          });
+        }
+      });
+      $('body').on('click', '.join-room', function(){
+        SERVER.joinRoom($(this).attr('data-id'), function(room){
+          STEPS.goTo(4);
+          joinRoom(room);
+        });
+      });
+
+      function joinRoom(room) {
+        CHAT = new ChatManager(room.id);
+        $('#room-name').text(room.name);
+        $('#room-count').text(room.userCount);
+        $('#room-cap').text(room.userCap);
+        CHAT.updateUsersInRoom(room.users);
+        console.log(room);
+      }
+
+      STEPS.boot();
+
+      //var game = new Game();
+      //game.start();
+    </script>
+  </body>
 </html>

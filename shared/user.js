@@ -27,6 +27,14 @@ var User = function() {
     },
     setName: function(newName) {
       name = newName;
+    },
+    toJson: function() {
+      return {
+        id: id,
+        name: name,
+        x: x,
+        y: y
+      };
     }
   };
 };
