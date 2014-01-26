@@ -1,5 +1,8 @@
-var Game = function(gameUsers) {
+var UUID = require('../shared/uuid');
+
+var Game = function(gameUsers, ownerId) {
   var id = UUID();
+  var ownerId = ownerId;
   var users = gameUsers || [];
 
   function getUsersJsonArray() {

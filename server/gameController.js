@@ -109,7 +109,7 @@ module.exports = (function() {
       var room = findById(rooms, data.rid);
       if (room.getOwnerID() == user.getID()) {
         var users = room.users;
-        var game = new Game(users);
+        var game = new Game(users, room.getOwnerID());
         removeById(rooms, data.rid);
         game.startGame();
       }
