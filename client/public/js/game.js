@@ -33,12 +33,12 @@ var Game = function() {
 	var keys = {};
 	var keyDown = function(e) {
 		keys[e.keyCode] = true;
-		if(keyPressMappings[e.keyCode]) 
+		if(keyPressMappings[e.keyCode])
 			keyPressMappings[e.keyCode]();
 	};
 	var keyUp = function(e) {
 		keys[e.keyCode] = false;
-		if(keyReleaseMappings[e.keyCode]) 
+		if(keyReleaseMappings[e.keyCode])
 			keyReleaseMappings[e.keyCode]();
 	}
 
@@ -63,6 +63,9 @@ var Game = function() {
 			window.onkeyup = null;
 			currentRenderer.stopRender();
 			currentEngine.stop();
+		},
+		getCharacter: function(uid) {
+			currentEngine.playerCharacter(uid);
 		}
 	};
 };

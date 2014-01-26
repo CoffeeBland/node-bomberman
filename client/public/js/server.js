@@ -43,9 +43,10 @@ var Server = function(serverName){
     socket.removeAllListeners('startingGame');
     socket.on('startingGame', function(data){
       STEPS.goTo(5);
-      var GAME_SERVER = new GameServer(data.id, socket);
       var game = new Game();
       game.start(1000 / 60, data.users);
+      var GAME_SERVER = new GameServer(data.id, currentUserID, socket, game);
+      socket.emit('joinedGame', {id: currentUserID});
     });
 
     socket.removeAllListeners('disconnect');

@@ -48,6 +48,11 @@ var Character = function(x, y) {
 			currentEngine.placeBombAt(x, y, bombStrength)
 		},
 
+		teleport: function(nx, ny) {
+			x = nx * 24;
+			y = ny * 24;
+		},
+
 		setSourceX: function(sourceX) {
 			sx = sourceX;
 			//while (sx >= sw)
