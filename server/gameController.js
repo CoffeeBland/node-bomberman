@@ -1,5 +1,6 @@
-var io = require('socket.io').listen(8081);
+var io = require('socket.io').listen(server);
 var Room = require('./room');
+var Game = require('./game');
 var User = require('../shared/user');
 
 module.exports = (function() {
