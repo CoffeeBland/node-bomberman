@@ -5,49 +5,36 @@
   </head>
   <body>
     <div id="container">
-      <h1>NodePixiSocket Bomberman</h1>
+      <h2>Kiasaki and Dagothig's</h2>
+      <h1>Bomberguy</h1>
       <div id="pregame">
-        <h2>Welcome, games should automatically display as soon as possible</h2>
-        <div>
-          <h4>User name</h4>
-          <input type="text" class="server-info" name="username" id="username" />
-        </div>
+        <h3>Welcome!</h3>
+        <p>Please type your name so you can start searching for games</p>
+        <h4>User name</h4>
+        <input type="text" class="server-info" name="username" id="username" />
+        <h4>Rooms</h4>
         <div id="room-select">
-
         </div>
       </div>
       <div id="game">
-        <h2 class="game-name">This game's name</h2>
+        <h3 class="game-name">This guy's lobby</h3>
         <canvas id="game-canvas"></canvas>
-
-        
-      </div>
-        <div id="step4">
-          <h4>Room: <span id="room-name"></span></h4>
-          <p style="color:#fff;">
-            <span id="room-count"></span> / <span id="room-cap"></span> players
-          </p>
-          <div id="room-users"></div>
-          <div id="chat-box" class="stylized stylized-light boxed fontized">
-            <div id="chat-messages"></div>
-            <div id="chat-toolbar">
-              <textarea name="message" id="chat-message" rows="2"></textarea>
-              <a href="javascript:void(0);">Send</a>
-            </div>
+        <div class="room">
+        <div class="users"></div>
+        <div class="chat">
+          <div class="messages">
           </div>
-          <div id="chat-buttons">
-            <a href="javascript:void(0);" class="stylized fontized boxed" id="chat-back">&larr; Back</a>
-            <a href="javascript:void(0);" class="stylized fontized boxed" id="chat-startgame">Start game</a>
+          <div class="controls">
+            <textarea name="message" id="chat-message"></textarea>
+            <a href="javascript:void(0)">Send</a>
           </div>
         </div>
       </div>
-    </div>
 
-    <div id="connection-status" class="hidden fontized stylized"></div>
+    <div id="connection-status" class="hidden"></div>
 
     <!-- Libs -->
     <script src="/js/lib/socket.io.js"></script>
-    <script src="/js/lib/pixi.dev.js"></script>
     <script src="/js/lib/jquery.min.js"></script>
 
     <!-- Game -->
@@ -57,11 +44,6 @@
     <script src="/js/game.js"></script>
 
     <!-- GUI / Pregame -->
-    <script src="/js/server.js"></script>
-    <script src="/js/statusManager.js"></script>
-    <script src="/js/stepsManager.js"></script>
-    <script src="/js/chatManager.js"></script>
-    <script src="/js/gameServer.js"></script>
-    <script src="/js/pregame.js"></script>
+    <script src="/js/connection.js"></script>
   </body>
 </html>

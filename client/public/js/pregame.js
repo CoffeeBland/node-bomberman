@@ -1,6 +1,7 @@
 /***************************************
   STEP 1: Server connect
 ****************************************/
+
 function setDisconnectCallback() {
   SERVER.setDisconnectCallback(function(){
     STEPS.goTo(1);
@@ -18,6 +19,7 @@ $('.dev-set-server').on('click', function(){
 /***************************************
   STEP 2: Username select
 ****************************************/
+
 function setUsername(){
   var username = $('#username').val().replace(/</g, '').replace(/>/g, '');
   if (username.length >= 3) {
@@ -40,6 +42,7 @@ if (localStorage["username"])
 /***************************************
   STEP 3: Room select
 ****************************************/
+
 function startRoomSelect() {
   $display = $('#room-select');
   $display.empty().append('<p style="color:#fff;">Loading...</p>');
@@ -91,6 +94,7 @@ function joinRoom(room) {
 /***************************************
   STEP 4
 ****************************************/
+
 $('#chat-back').on('click', function(){
   STEPS.goTo(3);
   SERVER.quitRoom();

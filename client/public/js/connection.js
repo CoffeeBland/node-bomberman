@@ -1,7 +1,5 @@
 var Server = function(serverName){
-  var currentUserID;
-  var currentUsername;
-  var currentUsers;
+  var playerInfo;
 
   var joinRoomCallback = null;
   var disconnectCallback = null;
@@ -13,6 +11,12 @@ var Server = function(serverName){
   socket.removeAllListeners('setUserId');
   socket.on('setUserId', function(data){
     currentUserID = data.id;
+  });
+
+  // 
+  socket.on('playerConnection', function(data) {
+    playerInfo = data.playerInfo;
+    data.games
   });
 
   STATUS.set('Connecting...', 3000);

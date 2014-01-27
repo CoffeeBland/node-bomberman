@@ -7,31 +7,31 @@ module.exports = function(server, port) {
   var io = require('socket.io').listen(server);
 
   var games = new GameRepository();
-  var playersSearchingGame = new PlayerRepository();
 
   io.sockets.on('connection', function (socket) {
 
-    socket.on('gamesGet', function(data){
-      var player = new Player(data.name, socket);
-      playersSearchingGame.addPlayer(player);
-      socket.emit('playerConnection', {
-        playerInfo: player.toJson(),
+    socket.on('gamesGet', function(data) {
+      // TODO : getting the games list      
+      socket.emit('gamesList', {
         games: []
       });
     });
 
     socket.on('gamesChoose', function(data){
-      var player = playersSearchingGame.findById(data.pid);
+      var player = new Player(data.name, socket);
       var game = null;
-      if (data.rid) {
-        game = games.findById(data.rid);
+      if (data.gid) {
+        game = games.findById(data.gid);
       } else if (data.gameName) {
         game = new Game(data.gameName, player.getId());
         games.addGame(game);
       }
       playersSearchingGame.removePlayer(player);
       game.addPlayer(player);
-      socket.emit('gameJoin', game.toJson());
+      socket.emit('gameJoin', {
+        player: player.toJson(),
+        game: game.toJson()
+      });
     });
 
   });
